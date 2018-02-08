@@ -15,11 +15,11 @@ App = React.createClass({
       const xhr = new XMLHttpRequest();
       xhr.onload = () => {
         if (xhr.status === 200) {
-            let data = JSON.parse(xhr.responseText).data;
-            let gif = {
-              url: data.fixed_width_downsampled_url,
-              sourceUrl: data.url
-            };
+          let data = JSON.parse(xhr.responseText).data;
+          let gif = {
+            url: data.fixed_width_downsampled_url,
+            sourceUrl: data.url
+          };
           resolve(gif);
         } else {
           reject(new Error(this.statusText));
@@ -41,13 +41,17 @@ App = React.createClass({
     //     searchingText: searchingText
     //   });
     // }.bind(this));
-    this.getGif(searchingText).then(function(gif) {
-      this.setState({
-        loading: false,
-        gif: gif,
-        searchingText: searchingText
-      });
-    }.bind(this))
+    this.getGif(searchingText)
+      .then((gif) => {
+        this.setState({
+          loading: false,
+          gif: gif,
+          searchingText: searchingText
+        });
+      })
+      .catch((error) => {
+        alert(error);
+      })
   },
   // getGif: function (searchingText, callback) {
   //   var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;
